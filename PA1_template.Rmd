@@ -1,4 +1,6 @@
 ```{r global_options, include=FALSE}
+# This bit of code sets formatting options for the entire document, it does not affect results
+# Set the width of rendered R code fields to 60 characters to avoid cutting off text:
 opts_chunk$set(tidy=TRUE, tidy.opts=list(width.cutoff=60))
 ```
 # Reproducible Research: Peer Assessment 1
