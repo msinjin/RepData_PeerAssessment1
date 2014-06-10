@@ -1,5 +1,5 @@
 ```{r global_options, include=FALSE}
-opts_chunk$set(tidy=TRUE, tidy.opts=list(width.cutoff=80))
+opts_chunk$set(tidy=TRUE, tidy.opts=list(width.cutoff=60))
 ```
 # Reproducible Research: Peer Assessment 1
 

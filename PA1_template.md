@@ -48,7 +48,8 @@ The following plot displays the average number of steps taken during each 5-minu
 
 
 ```r
-# Split the dataframe up by 5-minute intervals for further summaries:
+# Split the dataframe up by 5-minute intervals for further
+# summaries:
 stepsByInterval <- sapply(split(d$steps, d$interval), mean, na.rm = T)
 plot(names(stepsByInterval), stepsByInterval, type = "l", xlab = "Minute of day (in 5-minute intervals)", 
     ylab = "Number of steps", main = "Daily average number of steps per 5-minute interval")
@@ -71,13 +72,15 @@ There were several missing values (NAs) in the dataset, including entire days. I
 
 ```r
 numNA <- sum(is.na(d[, 1]))
-# Replace NAs with the average number of steps for that 5-minute interval
-d[is.na(d$steps), "steps"] <- stepsByInterval[match(d[is.na(d$steps), "interval"], 
-    names(stepsByInterval))]
+# Replace NAs with the average number of steps for that
+# 5-minute interval
+d[is.na(d$steps), "steps"] <- stepsByInterval[match(d[is.na(d$steps), 
+    "interval"], names(stepsByInterval))]
 # Write the cleaned data to a new dataframe
 dClean <- d
 # Split the dataframe up by day for further summaries:
-stepsByDayClean <- sapply(split(dClean$steps, dClean$date), sum, na.rm = T)
+stepsByDayClean <- sapply(split(dClean$steps, dClean$date), sum, 
+    na.rm = T)
 hist(stepsByDayClean, xlab = "Number of steps per day", main = "Histogram of the total number of steps taken per day")
 ```
 
@@ -85,7 +88,8 @@ hist(stepsByDayClean, xlab = "Number of steps per day", main = "Histogram of the
 
 ```r
 meanStepsClean <- as.integer(round(mean(stepsByDayClean, na.rm = T)))
-medianStepsClean <- as.integer(round(median(stepsByDayClean, na.rm = T)))
+medianStepsClean <- as.integer(round(median(stepsByDayClean, 
+    na.rm = T)))
 ```
 
 After replacing NA values with their mean, the mean and median total number of steps taken per day were 10766 and 10766, respectively.
@@ -100,12 +104,15 @@ To determine if stepping patterns were different on weekdays versus weekends I f
 
 ```r
 library(lattice)
-dClean$weekday <- ifelse(weekdays(dClean$date) %in% c("Saturday", "Sunday"), "weekend", 
-    "weekday")
-# Split the dataframe up by 5-minute intervals for further summaries by weekday:
-dCleanSplit <- aggregate(dClean, by = dClean[, c("interval", "weekday")], mean, simplify = F)
-xyplot(steps ~ interval | weekday, dCleanSplit, type = "l", layout = c(1, 2), xlab = "Minute of day (in 5-minute intervals)", 
-    ylab = "Number of steps", main = "Daily average number of steps per 5-minute interval for weekends and weekdays")
+dClean$weekday <- ifelse(weekdays(dClean$date) %in% c("Saturday", 
+    "Sunday"), "weekend", "weekday")
+# Split the dataframe up by 5-minute intervals for further
+# summaries by weekday:
+dCleanSplit <- aggregate(dClean, by = dClean[, c("interval", 
+    "weekday")], mean, simplify = F)
+xyplot(steps ~ interval | weekday, dCleanSplit, type = "l", layout = c(1, 
+    2), xlab = "Minute of day (in 5-minute intervals)", ylab = "Number of steps", 
+    main = "Daily average number of steps per 5-minute interval for weekends and weekdays")
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
