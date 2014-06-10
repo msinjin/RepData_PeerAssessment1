@@ -1,3 +1,6 @@
+```{r global_options, include=FALSE}
+opts_chunk$set(tidy=TRUE, tidy.opts=list(width.cutoff=80))
+```
 # Reproducible Research: Peer Assessment 1
 
 In this first assignment for the course Reproducable Research we are taking [two months of data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip) on the stepping behaviour of a single test subject and producing summary statistics and figures.

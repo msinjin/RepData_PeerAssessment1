@@ -1,3 +1,4 @@
+
 # Reproducible Research: Peer Assessment 1
 
 In this first assignment for the course Reproducable Research we are taking [two months of data](https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip) on the stepping behaviour of a single test subject and producing summary statistics and figures.
@@ -11,7 +12,7 @@ Loading of the data with the following code assumes you have a copy of the dataf
 library(lubridate)
 d <- read.csv(unzip("activity.zip"))
 d$date <- ymd(d$date)
-str(d) # Have a quick look at the data
+str(d)  # Have a quick look at the data
 ```
 
 ```
@@ -28,7 +29,7 @@ The following is a histogram of the total number of steps our subject took each 
 
 ```r
 # Split the dataframe up by day for further summaries:
-stepsByDay <- sapply(split(d$steps,d$date), sum, na.rm = T)
+stepsByDay <- sapply(split(d$steps, d$date), sum, na.rm = T)
 hist(stepsByDay, xlab = "Number of steps per day", main = "Histogram of the total number of steps taken per day")
 ```
 
@@ -48,14 +49,15 @@ The following plot displays the average number of steps taken during each 5-minu
 
 ```r
 # Split the dataframe up by 5-minute intervals for further summaries:
-stepsByInterval <- sapply(split(d$steps,d$interval), mean, na.rm = T) 
-plot(names(stepsByInterval),stepsByInterval, type = "l", xlab = "Minute of day (in 5-minute intervals)", ylab = "Number of steps", main = "Daily average number of steps per 5-minute interval")
+stepsByInterval <- sapply(split(d$steps, d$interval), mean, na.rm = T)
+plot(names(stepsByInterval), stepsByInterval, type = "l", xlab = "Minute of day (in 5-minute intervals)", 
+    ylab = "Number of steps", main = "Daily average number of steps per 5-minute interval")
 ```
 
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
 ```r
-maxSteps <-  round(max(stepsByInterval))
+maxSteps <- round(max(stepsByInterval))
 maxIntervalIndex <- which(stepsByInterval == max(stepsByInterval))
 maxIntervalName <- names(which(stepsByInterval == max(stepsByInterval)))
 ```
@@ -68,13 +70,14 @@ There were several missing values (NAs) in the dataset, including entire days. I
 
 
 ```r
-numNA <- sum(is.na(d[,1]))
+numNA <- sum(is.na(d[, 1]))
 # Replace NAs with the average number of steps for that 5-minute interval
-d[is.na(d$steps), "steps"] <- stepsByInterval[match(d[is.na(d$steps), "interval"], names(stepsByInterval))]
+d[is.na(d$steps), "steps"] <- stepsByInterval[match(d[is.na(d$steps), "interval"], 
+    names(stepsByInterval))]
 # Write the cleaned data to a new dataframe
 dClean <- d
 # Split the dataframe up by day for further summaries:
-stepsByDayClean <- sapply(split(dClean$steps,dClean$date), sum, na.rm = T) 
+stepsByDayClean <- sapply(split(dClean$steps, dClean$date), sum, na.rm = T)
 hist(stepsByDayClean, xlab = "Number of steps per day", main = "Histogram of the total number of steps taken per day")
 ```
 
@@ -97,10 +100,12 @@ To determine if stepping patterns were different on weekdays versus weekends I f
 
 ```r
 library(lattice)
-dClean$weekday <- ifelse(weekdays(dClean$date) %in% c("Saturday", "Sunday"), "weekend", "weekday")
+dClean$weekday <- ifelse(weekdays(dClean$date) %in% c("Saturday", "Sunday"), "weekend", 
+    "weekday")
 # Split the dataframe up by 5-minute intervals for further summaries by weekday:
-dCleanSplit <- aggregate(dClean, by = dClean[, c("interval", "weekday")], mean, simplify = F) 
-xyplot(steps ~ interval | weekday, dCleanSplit, type = "l", layout = c(1,2), xlab = "Minute of day (in 5-minute intervals)", ylab = "Number of steps", main = "Daily average number of steps per 5-minute interval for weekends and weekdays")
+dCleanSplit <- aggregate(dClean, by = dClean[, c("interval", "weekday")], mean, simplify = F)
+xyplot(steps ~ interval | weekday, dCleanSplit, type = "l", layout = c(1, 2), xlab = "Minute of day (in 5-minute intervals)", 
+    ylab = "Number of steps", main = "Daily average number of steps per 5-minute interval for weekends and weekdays")
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
